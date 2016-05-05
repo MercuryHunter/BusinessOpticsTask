@@ -14,8 +14,9 @@ def general_info():
 	mem = output[6] #PhysMem: 2637M used (783M wired), 1457M unused.
 	return [cpu, mem]
 
+# Slightly broken but found out it wouldn't work on ubuntu anyways...
 def cpu_top_ten():
-	cpu_output = get_command_output(cpu_command)
+	output = get_command_output(cpu_command)
 	top_ten = []
 	for i in range(34, 44):
 		line = re.split("\s+", cpu_output[i])
@@ -23,7 +24,7 @@ def cpu_top_ten():
 	return top_ten
 
 def mem_top_ten():
-	mem_output = get_command_output(mem_command)
+	output = get_command_output(mem_command)
 	top_ten = []
 	for i in range(34, 44):
 		line = re.split("\s+", mem_output[i])
@@ -33,7 +34,7 @@ def mem_top_ten():
 
 def get_command_output(command):
 	many_cols = os.environ.copy()
-	many_cols["COLUMNS"] = "256"
+	many_cols["COLUMNS"] = "512"
 	return str(subprocess.check_output(command, env = many_cols)).split("\\n")
 
 if __name__ == '__main__':
